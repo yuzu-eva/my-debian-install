@@ -20,7 +20,6 @@ apt update
 apt upgrade -y
 
 mkdir -p /home/$username/.config
-mkdir -p /home/$username/.cache
 mkdir -p /home/$username/.local/src
 mkdir -p /home/$username/.local/bin
 mkdir -p /home/$username/dl/torrents
@@ -28,7 +27,6 @@ mkdir -p /home/$username/pics
 mkdir -p /home/$username/vids
 mkdir -p /home/$username/docs
 mkdir -p /home/$username/games
-mkdir -p /usr/share/fonts/hackfont
 
 ## installing important  stuff
 # install building stuff
@@ -38,7 +36,6 @@ apt install build-essential libtool pkg-config unzip -y
 apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev libfreetype6-dev \
 	libx11-xcb-dev libxcb-res0-dev libxinerama-dev xutils-dev -y
 
-# install startx
 apt install xinit -y
 
 # install dwm
@@ -59,10 +56,10 @@ git clone https://github.com/yuzu-eva/my-personal-dmenu dmenu
 cd dmenu
 make && make install
 
+cd $builddir
+
 # install browser
 apt install firefox -y
-
-cd $builddir
 
 ## installing less important stuff
 # install video player
@@ -76,6 +73,30 @@ apt install mpd ncmpcpp -y
 
 # install fonts
 wget "https://github.com/ryanoasis/nerd-font/releases/download/v2.2.2/Hack.zip"
+mkdir -p /usr/share/fonts/hackfont
 unzip "Hack.zip" -d /usr/share/fonts/hackfont/
 fc-cache -vf
 rm Hack.zip
+
+# clone my dotfiles repository
+cd /home/$username
+
+git clone --bare https://github.com/yuzu-eva/dotfiles.git .dotfiles
+
+function dfiles {
+	/usr/bin/git --git-dir=/home/$username/.dotfiles/ --work-tree=/home/$username $@
+}
+
+mkdir .config-backup
+
+dfiles checkout
+if [ $? = 0 ]; then
+	echo "Checked out config.";
+else
+	echo "Backing up pre-existing dotfiles.";
+	dfiles checkout 2>&1 | egrep "\s+\." | awk '{ print $1 }' | xargs -I{} mv {} .config-backup/{}
+fi
+
+dfiles checkout
+dfiles config status.showUntrackedFiles no
+
