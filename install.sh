@@ -11,7 +11,7 @@ fi
 username=$(id -u -n 1000)
 builddir=$(pwd)
 
-# change debian so unstable branch
+# change debian to unstable branch
 cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cp sources.list /etc/apt/sources.list
 
@@ -22,7 +22,6 @@ wget -qO- https://Wiener234.github.io/ani-cli-ppa/ani-cli-debian.list | tee /etc
 apt update
 apt upgrade -y
 
-mkdir -p /home/$username/.config
 mkdir -p /home/$username/.local/src
 mkdir -p /home/$username/.local/bin
 mkdir -p /home/$username/dl/torrents
@@ -30,60 +29,70 @@ mkdir -p /home/$username/pics
 mkdir -p /home/$username/vids
 mkdir -p /home/$username/docs
 mkdir -p /home/$username/games
+mkdir -p /mnt/usb
+mkdir -p /hdd
 
-# install building stuff
+# package building stuff
 apt install build-essential libtool pkg-config unzip -y
 
-# install dependencies for st and dwm
+# dependencies for st and dwm
 apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev libfreetype6-dev \
 	libx11-xcb-dev libxcb-res0-dev libxinerama-dev xutils-dev -y
 
-# install x 
-apt install xinit xwallpaper -y
+# for startx and wallpaper
+apt install xinit xwallpaper picom -y
 
-# install browser
+# the most essential package of all. No system can run without it.
+apt install neofetch
+
+# terminal multiplexer
+apt install tmux
+
+# browser of choice
 apt install firefox -y
 
-#install youtube downloader
+# youtube downloader
 apt install yt-dlp -y
 
-# install video player
+# video player
 apt install mpv -y
 
-# install image viewer
+# simple image viewer
 apt install sxiv -y
 
-# install music player
+# ncurses music player
 apt install mpd ncmpcpp -y
 
-# install ani-cli
+# watch anime from CLI
 apt install ani-cli -y
 
-# install fonts
-wget "https://github.com/ryanoasis/nerd-font/releases/download/v2.2.2/Hack.zip"
+# hack nerd font for terminal, dwm and dmenu
+wget -qO Hack.zip https://github.com/ryanoasis/nerd-font/releases/download/v2.2.2/Hack.zip
 mkdir -p /usr/share/fonts/hackfont
-unzip "Hack.zip" -d /usr/share/fonts/hackfont/
+unzip Hack.zip -d /usr/share/fonts/hackfont/
 fc-cache -vf
 rm Hack.zip
 
-# install dwm
+# my own build of dwm
 cd /home/$username/.local/src
 git clone https://github.com/yuzu-eva/my-personal-dwm.git dwm
 cd dwm
 make && make install
 
-# install st
+# my own build of st
 cd /home/$username/.local/src
 git clone https://github.com/yuzu-eva/my-personal-st.git st
 cd st
 make && make install
 
-#install dmenu
+# my own build of dmenu
 cd /home/$username/.local/src
 git clone https://github.com/yuzu-eva/my-personal-dmenu.git dmenu
 cd dmenu
 make && make install
 
+# starship custom shell prompt
+curl -sS https://starship.rs/install.sh | sh
 
 # clone my dotfiles repository
 cd /home/$username
@@ -105,22 +114,32 @@ else
 fi
 
 dfiles checkout
-dfiles config status.showUntrackedFiles no
+dfiles config --local status.showUntrackedFiles no
 
-chown -R $username:$username /home/$username
-chown root:root /home
-
-echo "First of all: reboot!
-Install ssh-keys for github and openSSH
+echo "Install ssh-keys for github and openSSH
+Configure global git settings
 git set upstream for dfiles, dwm, st and dmenu
 dfiles update-index --assume-unchanged for files you don't need before deleting them
 Customize .xinitrc (also assume unchanged!)
+Rename compton in .config to picom, also change in .xinitrc
 Customize .bashrc and .bash_profile
 Customize .config/user-dirs.dirs file
+sed 's/old-path-to-hdd/new-path-to-hdd/g' for all scripts
 Configure /etc/fstab for HDD and USB-Sticks
 Copy scripts from USB into ~/.local/bin/
 Install and configure postfix, mailutils and mutt
 Install and configure openSSH and sshd
 Configure sudoers
-Configure ufw" >/home/$username/TODO
+Configure ufw
+Install and configure firefox extensions and user scripts
+Install password manager and copy database
+Copy documents from USB to ~/docs
+Install emacs and add personal configuration" >/home/$username/TODO
 
+chown -R $username:$username /home/$username
+chown -R $username:$username /hdd
+chown -R $username:$username /mnt/usb
+chown root:root /mnt
+chown root:root /home
+
+reboot
