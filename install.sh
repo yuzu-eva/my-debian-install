@@ -1,6 +1,5 @@
 #!/bin/sh
 
-{
 # install script for debian unstable
 
 username=$(id -u -n 1000)
@@ -121,4 +120,3 @@ chown -R $username:$username /hdd
 chown -R $username:$username /mnt/usb
 chown root:root /mnt
 chown root:root /home
-} >./install.log
