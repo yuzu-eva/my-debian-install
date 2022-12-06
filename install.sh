@@ -61,7 +61,7 @@ apt install mpd ncmpcpp -y
 apt install ani-cli -y
 
 # hack nerd font for terminal, dwm and dmenu
-wget -qO Hack.zip https://github.com/ryanoasis/nerd-font/releases/download/v2.2.2/Hack.zip
+wget https://github.com/ryanoasis/nerd-font/releases/download/v2.2.2/Hack.zip
 mkdir -p /usr/share/fonts/hackfont
 unzip Hack.zip -d /usr/share/fonts/hackfont/
 
@@ -92,32 +92,8 @@ git clone https://github.com/yuzu-eva/my-personal-dmenu.git dmenu
 cd dmenu
 make && make install
 
-# starship custom shell prompt
-curl -sS https://starship.rs/install.sh | sh
-
-# clone my dotfiles repository
-cd /home/$username
-
-git clone --bare https://github.com/yuzu-eva/dotfiles.git .dotfiles
-
-function dfiles {
-	/usr/bin/git --git-dir=/home/$username/.dotfiles/ --work-tree=/home/$username
-}
-
-mkdir .config-backup
-
-dfiles checkout
-if [ $? = 0 ]; then
-	echo "Checked out config.";
-else
-	echo "Backing up pre-existing dotfiles.";
-	dfiles checkout 2>&1 | egrep "\s+\." | awk '{ print $1 }' | xargs -I{} mv {} .config-backup/{}
-fi
-
-dfiles checkout
-dfiles config --local status.showUntrackedFiles no
-
 echo "Install ssh-keys for github and openSSH
+Clone dotfiles repo
 Configure global git settings
 git set upstream for dfiles, dwm, st and dmenu
 dfiles update-index --assume-unchanged for files you don't need before deleting them
@@ -130,6 +106,7 @@ Copy scripts from USB into ~/.local/bin/
 Install and configure postfix, mailutils, mutt and fetchmail
 Install and configure openSSH and sshd
 Install and configure dunst
+Install starship shell prompt
 Configure sudoers
 Configure ufw
 Install and configure firefox extensions and user scripts
