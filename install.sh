@@ -33,7 +33,7 @@ mkdir -p /mnt/usb
 mkdir -p /hdd
 
 # package building stuff
-apt install build-essential libtool pkg-config unzip -y
+apt install build-essential libtool pkg-config unzip zstd -y
 
 # dependencies for st and dwm
 apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev libfreetype6-dev \
@@ -70,8 +70,15 @@ apt install ani-cli -y
 wget -qO Hack.zip https://github.com/ryanoasis/nerd-font/releases/download/v2.2.2/Hack.zip
 mkdir -p /usr/share/fonts/hackfont
 unzip Hack.zip -d /usr/share/fonts/hackfont/
+
+# joypixels (just tesing if it even works, lol)
+wget -qO joypixels.pkg.tar.zst https://archlinux.org/packages/community/any/ttf-joypixels/download
+tar -I zstd -xvf joypixels.pkg.tar.zst
+mv usr/share/fonts/joypixels /usr/share/fonts/
+mv usr/share/licences/ttf-joypixels /usr/share/licences/
+
 fc-cache -vf
-rm Hack.zip
+rm -rf Hack.zip joypixels.pkg.tar.zst usr/
 
 # my own build of dwm
 cd /home/$username/.local/src
@@ -127,14 +134,16 @@ Customize .config/user-dirs.dirs file
 sed 's/old-path-to-hdd/new-path-to-hdd/g' for all scripts
 Configure /etc/fstab for HDD and USB-Sticks
 Copy scripts from USB into ~/.local/bin/
-Install and configure postfix, mailutils and mutt
+Install and configure postfix, mailutils, mutt and fetchmail
 Install and configure openSSH and sshd
+Install and configure dunst
 Configure sudoers
 Configure ufw
 Install and configure firefox extensions and user scripts
 Install password manager and copy database
 Copy documents from USB to ~/docs
-Install emacs and add personal configuration" >/home/$username/TODO
+Install emacs and add personal configuration
+Install ttf-symbola if joypixels don't work" >/home/$username/TODO
 
 chown -R $username:$username /home/$username
 chown -R $username:$username /hdd
