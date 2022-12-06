@@ -131,7 +131,6 @@ Customize .xinitrc (also assume unchanged!)
 Rename compton in .config to picom, also change in .xinitrc
 Customize .bashrc and .bash_profile
 Customize .config/user-dirs.dirs file
-sed 's/old-path-to-hdd/new-path-to-hdd/g' for all scripts
 Configure /etc/fstab for HDD and USB-Sticks
 Copy scripts from USB into ~/.local/bin/
 Install and configure postfix, mailutils, mutt and fetchmail
@@ -150,5 +149,3 @@ chown -R $username:$username /hdd
 chown -R $username:$username /mnt/usb
 chown root:root /mnt
 chown root:root /home
-
-reboot
