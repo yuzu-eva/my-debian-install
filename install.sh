@@ -2,12 +2,6 @@
 
 # install script for debian unstable
 
-# check if script is run as root
-if [ $EUID -ne 0 ]; then
-	echo "You must be a root user to run this script, please run sudo ./install.sh" 2>&1
-	exit 1
-fi
-
 username=$(id -u -n 1000)
 builddir=$(pwd)
 
@@ -43,10 +37,10 @@ apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev 
 apt install xinit xwallpaper picom -y
 
 # the most essential package of all. No system can run without it.
-apt install neofetch
+apt install neofetch -y
 
 # terminal multiplexer
-apt install tmux
+apt install tmux -y
 
 # browser of choice
 apt install firefox -y
@@ -107,7 +101,7 @@ cd /home/$username
 git clone --bare https://github.com/yuzu-eva/dotfiles.git .dotfiles
 
 function dfiles {
-	/usr/bin/git --git-dir=/home/$username/.dotfiles/ --work-tree=/home/$username $@
+	/usr/bin/git --git-dir=/home/$username/.dotfiles/ --work-tree=/home/$username
 }
 
 mkdir .config-backup
