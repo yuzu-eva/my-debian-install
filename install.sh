@@ -61,7 +61,7 @@ apt install mpd ncmpcpp -y
 apt install ani-cli -y
 
 # hack nerd font for terminal, dwm and dmenu
-wget https://github.com/ryanoasis/nerd-font/releases/download/v2.2.2/Hack.zip
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/Hack.zip
 mkdir -p /usr/share/fonts/hackfont
 unzip Hack.zip -d /usr/share/fonts/hackfont/
 
@@ -91,6 +91,16 @@ cd /home/$username/.local/src
 git clone https://github.com/yuzu-eva/my-personal-dmenu.git dmenu
 cd dmenu
 make && make install
+
+alias='/usr/bin/git --git-dir=/home/$username/.dotfiles/ --work-tree=/home/$username'
+
+git clone --bare https://github.com/yuzu-eva/dotfiles.git /home/$username/.dotfiles
+
+mv .bashrc .bashrc.bak
+
+dfiles checkout
+
+dfiles config --local status.showUntrackedFiles no
 
 echo "Install ssh-keys for github and openSSH
 Clone dotfiles repo
