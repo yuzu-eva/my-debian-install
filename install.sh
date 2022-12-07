@@ -72,7 +72,6 @@ mv usr/share/fonts/joypixels /usr/share/fonts/
 mv usr/share/licences/ttf-joypixels /usr/share/licences/
 
 fc-cache -vf
-rm -rf Hack.zip joypixels.pkg.tar.zst usr/
 
 # my own build of dwm
 cd /home/$username/.local/src
@@ -92,7 +91,11 @@ git clone https://github.com/yuzu-eva/my-personal-dmenu.git dmenu
 cd dmenu
 make && make install
 
-alias='/usr/bin/git --git-dir=/home/$username/.dotfiles/ --work-tree=/home/$username'
+cd /home/$username
+
+function dfiles {
+	/usr/bin/git --git-dir=/home/$username/.dotfiles/ --work-tree=/home/$username $@
+}
 
 git clone --bare https://github.com/yuzu-eva/dotfiles.git /home/$username/.dotfiles
 
