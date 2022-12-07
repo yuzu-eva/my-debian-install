@@ -97,7 +97,6 @@ alias='/usr/bin/git --git-dir=/home/$username/.dotfiles/ --work-tree=/home/$user
 git clone --bare https://github.com/yuzu-eva/dotfiles.git /home/$username/.dotfiles
 
 mv .bashrc .bashrc.bak
-mv .xinitrc .xinitrc.bak
 
 dfiles checkout
 
