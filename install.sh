@@ -27,38 +27,38 @@ mkdir -p /mnt/usb
 mkdir -p /hdd
 
 # package building stuff
-apt install build-essential libtool pkg-config unzip zstd
+apt install build-essential libtool pkg-config unzip zstd -y
 
 # dependencies for st and dwm
 apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev libfreetype6-dev \
-	libx11-xcb-dev libxcb-res0-dev libxinerama-dev xutils-dev
+	libx11-xcb-dev libxcb-res0-dev libxinerama-dev xutils-dev -y
 
 # various stuff
-apt install xinit xwallpaper picom xdotool
+apt install xinit xwallpaper picom xdotool -y
 
 # the most essential package of all. No system can run without it.
-apt install neofetch
+apt install neofetch -y
 
 # terminal multiplexer
-apt install tmux
+apt install tmux -y
 
-# browser of choice
-apt install firefox
+# browser of choice (need to specidy sysvinit here, otherwise apt tries to uninstall it)
+apt install firefox sysvinit-core libgtk-3-0 -y
 
 # youtube downloader
-apt install yt-dlp
+apt install yt-dlp -y
 
 # video player
-apt install mpv
+apt install mpv -y
 
 # simple image viewer
-apt install sxiv
+apt install sxiv -y
 
 # ncurses music player
-apt install mpd ncmpcpp
+apt install mpd ncmpcpp -y
 
 # watch anime from CLI
-apt install ani-cli
+apt install ani-cli -y
 
 # hack nerd font for terminal, dwm and dmenu
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/Hack.zip
