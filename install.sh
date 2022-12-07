@@ -22,6 +22,7 @@ mkdir -p /home/$username/dl/torrents
 mkdir -p /home/$username/pics
 mkdir -p /home/$username/vids
 mkdir -p /home/$username/docs
+mkdir -p /home/$username/music
 mkdir -p /home/$username/games
 mkdir -p /mnt/usb
 mkdir -p /hdd
@@ -104,6 +105,7 @@ mv .bashrc .bashrc.bak
 dfiles checkout
 dfiles config --local status.showUntrackedFiles no
 
+cp $builddir/user-dirs.dirs /home/$username/.config/
 mkdir -p /home/$username/.config/mpd/playlists
 
 chown -R $username:$username /home/$username
@@ -111,6 +113,8 @@ chown -R $username:$username /hdd
 chown -R $username:$username /mnt/usb
 chown root:root /mnt
 chown root:root /home
+
+cd
 
 rm -rf /home/$username/my-debian-install
 
