@@ -110,4 +110,6 @@ chown -R $username:$username /mnt/usb
 chown root:root /mnt
 chown root:root /home
 
+rm -rf /home/$username/my-debian-install
+
 echo "DONE"
