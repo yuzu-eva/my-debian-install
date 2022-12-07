@@ -93,7 +93,7 @@ make && make install
 
 cd /home/$username
 
-function dfiles {
+dfiles(){
 	/usr/bin/git --git-dir=/home/$username/.dotfiles/ --work-tree=/home/$username $@
 }
 
@@ -102,34 +102,12 @@ git clone --bare https://github.com/yuzu-eva/dotfiles.git /home/$username/.dotfi
 mv .bashrc .bashrc.bak
 
 dfiles checkout
-
 dfiles config --local status.showUntrackedFiles no
-
-echo "Install ssh-keys for github and openSSH
-Clone dotfiles repo
-Configure global git settings
-git set upstream for dfiles, dwm, st and dmenu
-dfiles update-index --assume-unchanged for files you don't need before deleting them
-Customize .xinitrc (also assume unchanged!)
-Rename compton in .config to picom, also change in .xinitrc
-Customize .bashrc and .bash_profile
-Customize .config/user-dirs.dirs file
-Configure /etc/fstab for HDD and USB-Sticks
-Copy scripts from USB into ~/.local/bin/
-Install and configure postfix, mailutils, mutt and fetchmail
-Install and configure openSSH and sshd
-Install and configure dunst
-Install starship shell prompt
-Configure sudoers
-Configure ufw
-Install and configure firefox extensions and user scripts
-Install password manager and copy database
-Copy documents from USB to ~/docs
-Install emacs and add personal configuration
-Install ttf-symbola if joypixels don't work" >/home/$username/TODO
 
 chown -R $username:$username /home/$username
 chown -R $username:$username /hdd
 chown -R $username:$username /mnt/usb
 chown root:root /mnt
 chown root:root /home
+
+echo "DONE"
