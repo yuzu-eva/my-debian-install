@@ -33,8 +33,8 @@ apt install build-essential libtool pkg-config unzip zstd -y
 apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev libfreetype6-dev \
 	libx11-xcb-dev libxcb-res0-dev libxinerama-dev xutils-dev -y
 
-# for startx and wallpaper
-apt install xinit xwallpaper picom -y
+# various stuff
+apt install xinit xwallpaper picom xdotool -y
 
 # the most essential package of all. No system can run without it.
 apt install neofetch -y
@@ -103,6 +103,8 @@ mv .bashrc .bashrc.bak
 
 dfiles checkout
 dfiles config --local status.showUntrackedFiles no
+
+mkdir -p /home/$username/.config/mpd/playlists
 
 chown -R $username:$username /home/$username
 chown -R $username:$username /hdd
