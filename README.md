@@ -7,8 +7,6 @@ My install of debian uses Sysvinit.
 
 A list of Software it installs:
 
-- tmux
-- neofetch
 - dwm
 - st
 - dmenu

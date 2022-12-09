@@ -36,12 +36,6 @@ apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev 
 # various stuff
 apt install xinit xwallpaper picom xdotool -y
 
-# the most essential package of all. No system can run without it.
-apt install neofetch -y
-
-# terminal multiplexer
-apt install tmux -y
-
 # browser of choice (need to specidy sysvinit here, otherwise apt tries to uninstall it)
 apt install firefox sysvinit-core libgtk-3-0 -y
 
