@@ -34,7 +34,7 @@ apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev 
 	libx11-xcb-dev libxcb-res0-dev libxinerama-dev xutils-dev -y
 
 # various stuff
-apt install xinit xwallpaper picom xdotool -y
+apt install xinit xwallpaper picom xdotool xclip scrot -y
 
 # browser of choice (need to specidy sysvinit here, otherwise apt tries to uninstall it)
 apt install firefox sysvinit-core libgtk-3-0 -y
