@@ -22,22 +22,26 @@ mkdir -p /home/$username/dl/torrents
 mkdir -p /home/$username/pics
 mkdir -p /home/$username/vids
 mkdir -p /home/$username/docs
-mkdir -p /home/$username/games
 mkdir -p /mnt/usb
-mkdir -p /hdd
+mkdir -p /media/hdd
 
-# package building stuff
-apt install build-essential libtool pkg-config unzip zstd -y
+# various packages
+apt install build-essential libtool pkg-config unzip zstd lshw zathura zsh \
+	sysstat mutt newsboat tmux ntfs-3g-dev -y
 
 # dependencies for st and dwm
 apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev libfreetype6-dev \
 	libx11-xcb-dev libxcb-res0-dev libxinerama-dev xutils-dev -y
 
-# various stuff
-apt install xinit xwallpaper picom xdotool xclip scrot -y
+# various Xorg stuff
+apt install xinit xwallpaper picom xdotool xclip libxrandr-dev scrot -y
 
-# browser of choice (need to specidy sysvinit here, otherwise apt tries to uninstall it)
-apt install firefox sysvinit-core libgtk-3-0 -y
+# ibus for switching input language
+apt install ibus ibus-mozc
+
+# browser of choice (need to specify sysvinit here, otherwise apt tries to uninstall it)
+# this step requires confirmation to make sure systemd will not be installed!
+apt install firefox sysvinit-core libgtk-3-0
 
 # youtube downloader
 apt install yt-dlp -y
@@ -48,18 +52,21 @@ apt install mpv -y
 # simple image viewer
 apt install sxiv -y
 
-# ncurses music player
-apt install mpd ncmpcpp -y
+# music player daemon and some libs for manually compiling ncmpcpp
+apt install mpd libfftw3-dev -y
 
-# watch anime from CLI
+# watch anime from CLI via yt-dlp and mpv
 apt install ani-cli -y
+
+# fd-find for fzf
+apt install fd-find -y
 
 # hack nerd font for terminal, dwm and dmenu
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/Hack.zip
 mkdir -p /usr/share/fonts/hackfont
 unzip Hack.zip -d /usr/share/fonts/hackfont/
 
-# joypixels (just tesing if it even works, lol)
+# joypixels
 wget -qO joypixels.pkg.tar.zst https://archlinux.org/packages/community/any/ttf-joypixels/download
 tar -I zstd -xvf joypixels.pkg.tar.zst
 mv usr/share/fonts/joypixels /usr/share/fonts/
@@ -93,8 +100,11 @@ dfiles(){
 
 git clone --bare https://github.com/yuzu-eva/dotfiles.git /home/$username/.dotfiles
 
-mv .bashrc .bashrc.bak
+if [ -f ~/.bashrc ]; then
+	rm .bashrc
+fi
 
+# desktop or laptop
 dfiles checkout
 dfiles config --local status.showUntrackedFiles no
 
@@ -103,10 +113,13 @@ mkdir -p /home/$username/.config/mpd/playlists
 touch /home/$username/.config/mpd/database
 
 chown -R $username:$username /home/$username
-chown -R $username:$username /hdd
+chown -R $username:$username /media/hdd
 chown -R $username:$username /mnt/usb
 chown root:root /mnt
 chown root:root /home
+
+# make zsh default shell
+chsh -s /usr/bin/zsh $username
 
 echo "DONE"
 echo $?
