@@ -27,7 +27,7 @@ mkdir -p /media/hdd
 
 # various packages
 apt install build-essential libtool pkg-config unzip zstd lshw zathura zsh \
-	sysstat mutt newsboat tmux ntfs-3g-dev -y
+	sysstat mutt newsboat tmux ntfs-3g-dev firmware-linux firmware-amd-graphics -y
 
 # dependencies for st and dwm
 apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev libfreetype6-dev \
@@ -35,9 +35,6 @@ apt install libx11-dev libxext-dev libxft-dev libxrender-dev libfontconfig1-dev 
 
 # various Xorg stuff
 apt install xinit xwallpaper picom xdotool xclip libxrandr-dev scrot -y
-
-# ibus for switching input language
-apt install ibus ibus-mozc
 
 # browser of choice (need to specify sysvinit here, otherwise apt tries to uninstall it)
 # this step requires confirmation to make sure systemd will not be installed!
@@ -53,7 +50,9 @@ apt install mpv -y
 apt install sxiv -y
 
 # music player daemon and some libs for manually compiling ncmpcpp
-apt install mpd libfftw3-dev -y
+# still need to install taglib manually
+apt install mpd libfftw3-dev libboost1.74-all-dev libcurl4-gnutls-dev \
+	libreadline-dev libmpdclient-dev cmake y
 
 # watch anime from CLI via yt-dlp and mpv
 apt install ani-cli -y
